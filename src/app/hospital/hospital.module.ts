@@ -12,10 +12,19 @@ import { NgApexchartsModule } from "ng-apexcharts";
 //components
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { UpdateProfileComponent } from "./profile-update/profile-update.component";
+import { ManageDoctorsComponent } from "./manage-doctors/manage-doctors.component";
+import { ProfileSettingsComponent } from "./manage-doctors/profile-settings/profile-settings.component";
+import { establishmentComponent } from "./manage-doctors/profile-settings/establishment/establishment.component";
 import { HospitalRoutingModule } from "./hospital-routing.module";
-
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 @NgModule({
-  declarations: [DashboardComponent, UpdateProfileComponent],
+  declarations: [
+    DashboardComponent,
+    UpdateProfileComponent,
+    ManageDoctorsComponent,
+    ProfileSettingsComponent,
+    establishmentComponent,
+  ],
   imports: [
     CommonModule,
     HospitalRoutingModule,
@@ -31,6 +40,7 @@ import { HospitalRoutingModule } from "./hospital-routing.module";
     FullCalendarModule,
     NgApexchartsModule,
     PerfectScrollbarModule,
+    GooglePlaceModule,
   ],
 })
 export class HospitalModule {}

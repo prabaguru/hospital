@@ -18,11 +18,11 @@ import { first } from "rxjs/operators";
 import * as moment from "moment";
 (moment as any).suppressDeprecationWarnings = true;
 @Component({
-  selector: "hospital-profile-update",
-  templateUrl: "./profile-update.component.html",
-  styleUrls: ["./profile-update.component.scss"],
+  selector: "hospital-doctor-manage",
+  templateUrl: "./manage-doctors.component.html",
+  styleUrls: ["./manage-doctors.component.scss"],
 })
-export class UpdateProfileComponent
+export class ManageDoctorsComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit
 {

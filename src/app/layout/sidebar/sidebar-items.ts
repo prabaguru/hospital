@@ -32,6 +32,16 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
         role: "Hospital",
       },
+      {
+        path: "/hospital/doctors",
+        title: "Manage Doctors",
+        moduleName: "",
+        icon: "",
+        class: "ml-menu",
+        groupTitle: false,
+        submenu: [],
+        role: "Hospital",
+      },
     ],
   },
 ];

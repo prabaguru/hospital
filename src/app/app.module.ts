@@ -35,7 +35,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelPropagation: false,
 };
-import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -60,7 +59,6 @@ export function createTranslateLoader(http: HttpClient): any {
     PerfectScrollbarModule,
     NgxSpinnerModule,
     ClickOutsideModule,
-    GooglePlaceModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

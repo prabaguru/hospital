@@ -4,6 +4,8 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { UpdateProfileComponent } from "./profile-update/profile-update.component";
+import { ManageDoctorsComponent } from "./manage-doctors/manage-doctors.component";
+import { ProfileSettingsComponent } from "./manage-doctors/profile-settings/profile-settings.component";
 const routes: Routes = [
   // {
   //   path: "",
@@ -17,6 +19,14 @@ const routes: Routes = [
   {
     path: "updateProfile",
     component: UpdateProfileComponent,
+  },
+  {
+    path: "doctors",
+    component: ManageDoctorsComponent,
+  },
+  {
+    path: "adddoctor",
+    component: ProfileSettingsComponent,
   },
 ];
 @NgModule({

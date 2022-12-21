@@ -1,0 +1,65 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="header">
+            <h2>
+              <strong>Manage Doctors</strong>
+            </h2>
+            <form
+              [formGroup]="profileForm"
+              class="profile-form"
+              autocomplete="off"
+            ></form>
+
+            <div class="float-end">
+              <button
+                mat-raised-button
+                class="matbutton"
+                color="primary"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdropMD"
+              >
+                <mat-icon matPrefix class="form-icon">note_add</mat-icon> Add
+                Doctor
+              </button>
+            </div>
+            <div class="row"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div
+  class="modal fade"
+  id="staticBackdropMD"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>

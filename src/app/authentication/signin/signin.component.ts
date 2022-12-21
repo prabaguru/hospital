@@ -30,7 +30,7 @@ export class SigninComponent
   ) {
     super();
     if (this.authService.currentUserValue) {
-      this.router.navigate(["/weiser/weiserDashboard"]);
+      this.router.navigate(["/hospital/Dashboard"]);
     }
   }
   ngOnInit() {

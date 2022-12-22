@@ -47,6 +47,12 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+  getDoctorsById(id: any) {
+    return this.http
+      .get(`${environment.apiUrl}/doctors/getAllById/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
   getAllDoctorsById(data: any) {
     //let params = new HttpParams({ fromObject: data });
     //console.log(params);
@@ -76,5 +82,13 @@ export class ApiService {
 
   delete(id: number) {
     return this.http.delete(`${environment.apiUrl}/doctors/${id}`);
+  }
+
+  //doctor
+
+  register(data) {
+    return this.http
+      .post(`${environment.apiUrl}/doctors/register`, data)
+      .pipe(catchError(this.handleError));
   }
 }

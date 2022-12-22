@@ -52,23 +52,27 @@ export class DashboardComponent
       "DD/MM/YYYY hh.mm a"
     );
 
-    this.subs.sink = this.apiService.getDoctorsLIsting().subscribe({
-      next: (data: any) => {
-        this.doctorsListing = [];
-        this.doctorsListing = data;
-        //console.log(this.doctorsListing);
-        this.active = this.doctorsListing.filter((x) => x.approved == true);
-        this.inactive = this.doctorsListing.filter((x) => x.approved == false);
-      },
-      error: (err) => {
-        this.sharedDataService.showNotification(
-          "snackbar-danger",
-          err,
-          "top",
-          "center"
-        );
-      },
-    });
+    this.subs.sink = this.apiService
+      .getDoctorsById(this.userData._id)
+      .subscribe({
+        next: (data: any) => {
+          this.doctorsListing = [];
+          this.doctorsListing = data.filter((x) => x.approved == true);
+          //console.log(this.doctorsListing);
+          this.active = this.doctorsListing.filter((x) => x.approved == true);
+          this.inactive = this.doctorsListing.filter(
+            (x) => x.approved == false
+          );
+        },
+        error: (err) => {
+          this.sharedDataService.showNotification(
+            "snackbar-danger",
+            err,
+            "top",
+            "center"
+          );
+        },
+      });
   }
 
   getDocDetails(id: string) {

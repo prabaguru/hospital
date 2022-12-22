@@ -7,11 +7,6 @@
             <h2>
               <strong>Manage Doctors</strong>
             </h2>
-            <form
-              [formGroup]="profileForm"
-              class="profile-form"
-              autocomplete="off"
-            ></form>
 
             <div class="float-end">
               <button
@@ -45,7 +40,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Register Doctor</h5>
         <button
           type="button"
           class="btn-close"
@@ -53,12 +48,166 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">...</div>
+      <div class="modal-body">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <label>First Name</label>
+          <div class="form-group auth-form-group mb-4">
+            <mat-icon matSuffix class="auth-page-icon">face</mat-icon>
+            <input
+              type="text"
+              autocomplete="off"
+              formControlName="firstName"
+              class="form-control auth-control"
+              id="firstName"
+              placeholder="First Name"
+              minlength="3"
+              maxlength="50"
+              [ngClass]="{
+                'is-invalid': submitted && f.firstName.errors
+              }"
+            />
+            <div
+              *ngIf="submitted && f.firstName.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.firstName.errors.required">Name is required</div>
+              <div *ngIf="f.firstName.errors.pattern">
+                Nos & Special characters is not allowed
+              </div>
+            </div>
+          </div>
+          <label>Email</label>
+          <div class="form-group auth-form-group mb-4">
+            <mat-icon matSuffix class="auth-page-icon">email</mat-icon>
+            <input
+              type="email"
+              autocomplete="off"
+              formControlName="email"
+              maxlength="200"
+              class="form-control auth-control"
+              id="email"
+              placeholder="Email"
+              [ngClass]="{
+                'is-invalid': submitted && f.email.errors
+              }"
+            />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">
+                Email must be a valid email address
+              </div>
+            </div>
+          </div>
+          <label
+            >Mobile
+            <mat-error class="mobno">
+              (Enter 10 digit no. +91 is not mandatory)</mat-error
+            ></label
+          >
+          <div class="form-group auth-form-group mb-4">
+            <mat-icon matSuffix class="auth-page-icon">phone</mat-icon>
+            <input
+              type="text"
+              formControlName="mobile"
+              class="form-control auth-control"
+              [ngClass]="{
+                'is-invalid': submitted && f.mobile.errors
+              }"
+              placeholder="Mobile No"
+              maxlength="10"
+            />
+
+            <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+              <div *ngIf="f.mobile.errors.required">Mobile no is required</div>
+              <div *ngIf="f.mobile.errors.pattern">Invalid mobile no...</div>
+              <div *ngIf="f.mobile.minLength">Enter 10 digit number...</div>
+            </div>
+          </div>
+          <label>Password</label>
+          <div class="form-group auth-form-group mb-4">
+            <mat-icon
+              matSuffix
+              class="auth-page-icon"
+              (click)="togglePasswordVisibility()"
+              >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
+            >
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              autocomplete="off"
+              formControlName="password"
+              maxlength="15"
+              class="form-control auth-control"
+              id="password"
+              [ngClass]="{
+                'is-invalid': submitted && f.password.errors
+              }"
+              placeholder="Password"
+            />
+
+            <div
+              *ngIf="submitted && f.password.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.password.errors.required">Password is required</div>
+              <div *ngIf="f.password.errors.minlength">
+                Password must be at least 6 characters
+              </div>
+            </div>
+          </div>
+          <label>Confirm Password</label>
+          <div class="form-group auth-form-group mb-4">
+            <mat-icon
+              matSuffix
+              class="auth-page-icon"
+              (click)="togglePasswordVisibility()"
+              >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
+            >
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              autocomplete="off"
+              formControlName="confirmPassword"
+              class="form-control auth-control"
+              id="confirmPassword"
+              maxlength="15"
+              [ngClass]="{
+                'is-invalid': submitted && f.confirmPassword.errors
+              }"
+              placeholder="Confirm Password"
+            />
+            <div
+              *ngIf="submitted && f.confirmPassword.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.confirmPassword.errors.required">
+                Confirm Password is required
+              </div>
+              <div *ngIf="f.confirmPassword.errors.mustMatch">
+                Passwords must match
+              </div>
+            </div>
+          </div>
+
+          <div class="container-login100-form-btn">
+            <button
+              mat-raised-button
+              color="primary"
+              class="login100-form-btn"
+              type="submit"
+            >
+              Register
+            </button>
+          </div>
+        </form>
+      </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          #closeMD
+          data-bs-dismiss="modal"
+        >
           Close
         </button>
-        <button type="button" class="btn btn-primary">Understood</button>
       </div>
     </div>
   </div>

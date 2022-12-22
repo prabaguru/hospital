@@ -92,8 +92,9 @@ export class ProfileSettingsComponent
 
   ngOnInit() {
     //this.userData = this.authService.currentUserValue;
-    this.subs.sink = this.authService.currentUser.subscribe((x) => {
-      this.userData = x;
+    this.subs.sink = this.sharedDataService.doctorDetails.subscribe((x) => {
+      this.userData = x.doctor;
+      console.log(this.userData);
     });
     this.cage = this.userData.age ? this.userData.age : "";
     this.preliminaryForm = this.formBuilder.group({

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import {
   FormBuilder,
@@ -17,6 +17,7 @@ import { UnsubscribeOnDestroyAdapter } from "src/app/shared/UnsubscribeOnDestroy
 import { first } from "rxjs/operators";
 import * as moment from "moment";
 (moment as any).suppressDeprecationWarnings = true;
+
 @Component({
   selector: "hospital-doctor-manage",
   templateUrl: "./manage-doctors.component.html",
@@ -26,12 +27,13 @@ export class ManageDoctorsComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit
 {
-  public profileForm: FormGroup = new FormGroup({});
+  @ViewChild("closeMD") close: ElementRef;
   userData: any;
   submitted: boolean = false;
   public showPassword: boolean = false;
   public showPassword2: boolean = false;
   lastLogin: string = "";
+  loginForm: FormGroup;
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
@@ -48,43 +50,26 @@ export class ManageDoctorsComponent
     this.lastLogin = moment(this.userData.lastLogin).format(
       "DD/MM/YYYY hh.mm a"
     );
-    this.profileForm = this.formBuilder.group(
+    this.loginForm = this.formBuilder.group(
       {
-        id: new FormControl(this.userData._id ? this.userData._id : "", [
-          Validators.required,
-        ]),
-        firstName: new FormControl(
-          {
-            value: this.userData.firstName ? this.userData.firstName : "",
-            disabled: true,
-          },
+        firstName: [
+          "praba",
+          [Validators.required, Validators.pattern("^[a-zA-Z '-]+$")],
+        ],
+        email: [
+          "praba_wg@yahoo.co.in",
+          [Validators.required, Validators.email, Validators.minLength(5)],
+        ],
+        mobile: [
+          "9980568567",
           [
             Validators.required,
-            Validators.minLength(3),
-            Validators.maxLength(50),
-            Validators.pattern("^[a-zA-Z '-]+$"),
-          ]
-        ),
-        email: new FormControl(
-          {
-            value: this.userData.email ? this.userData.email : "",
-            disabled: true,
-          },
-          [Validators.required, Validators.email]
-        ),
-
-        mobile: new FormControl(
-          {
-            value: this.userData.mobile.number
-              ? this.userData.mobile.number
-              : "",
-            disabled: true,
-          },
-          [Validators.required, Validators.maxLength(10)]
-        ),
-        currentPwd: ["", [Validators.required]],
-        password: ["", [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ["", Validators.required],
+            Validators.minLength(10),
+            Validators.pattern("[0-9]{10}"),
+          ],
+        ],
+        password: ["qwqwqw", [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ["qwqwqw", Validators.required],
       },
       {
         validator: MustMatch("password", "confirmPassword"),
@@ -92,50 +77,60 @@ export class ManageDoctorsComponent
     );
   }
   get f() {
-    return this.profileForm.controls;
+    return this.loginForm.controls;
   }
-  saveChanges() {
+  onSubmit() {
     this.submitted = true;
-    if (this.profileForm.invalid) {
+    if (this.loginForm.invalid) {
       return;
     } else {
-      let obj = {};
-      obj = {
-        id: this.f["id"].value,
-        resetPass: "reset",
-        currentPwd: this.f["currentPwd"].value,
-        password: this.f["password"].value,
-        confirmPassword: this.f["confirmPassword"].value,
+      let obj = {
+        hId: this.userData._id,
+        hName: this.userData.firstName,
+        firstName: this.loginForm.value.firstName,
+        email: this.loginForm.value.email,
+        mobile: {
+          nationalNumber: `0${this.loginForm.value.mobile}`,
+          e164Number: `+91${this.loginForm.value.mobile}`,
+          number: this.loginForm.value.mobile,
+          internationalNumber: `+91${this.loginForm.value.mobile}`,
+          countryCode: "IN",
+          dialCode: "+91",
+        },
+        password: this.loginForm.value.password,
+        role: "Doctor",
       };
       this.subs.sink = this.apiService
-        .update(obj)
+        .register(obj)
         .pipe(first())
         .subscribe({
-          next: (res) => {
-            this.submitted = false;
+          next: (data) => {
+            this.sharedDataService.setDoctorObj(data);
             this.sharedDataService.showNotification(
               "snackbar-success",
-              "Password change successful... Login with your new password",
+              "Registration Successfull. Add doctor details",
               "top",
               "center"
             );
-            this.authService.logout();
-            this.router.navigate(["/authentication/signin"], {
-              queryParams: {
-                email: this.f["email"].value,
-              },
-            });
+            this.close.nativeElement.click();
+            this.loginForm.reset();
+            this.submitted = false;
+            // this.router.navigate(["/authentication/signin"], {
+            //   queryParams: { loginType: "Doctor", email: this.f.email.value },
+            // });
           },
           error: (error) => {
-            this.submitted = false;
             this.sharedDataService.showNotification(
               "snackbar-danger",
               error,
               "top",
               "center"
             );
+            this.submitted = false;
           },
-          complete: () => {},
+          complete: () => {
+            //this.alertService.success("Registration successful", true);
+          },
         });
     }
   }

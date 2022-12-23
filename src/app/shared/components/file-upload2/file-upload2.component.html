@@ -15,7 +15,9 @@
       target="_blank"
       >{{ userdatas.docName }}</a
     >
-    <span *ngIf="!userdatas.docUrl">No records Found</span>
+    <mat-error *ngIf="!userdatas.docUrl" class="nrFound"
+      >No record found</mat-error
+    >
     <!-- <div class="preview" *ngIf="preview && preview !== null">
       <img [src]="preview" alt="DP" class="img-thumbnail" width="70" />
     </div> -->

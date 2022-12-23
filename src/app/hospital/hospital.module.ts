@@ -18,7 +18,7 @@ import { establishmentComponent } from "./manage-doctors/profile-settings/establ
 import { ImageUploadComponent } from "./manage-doctors/image-upload/image-upload.component";
 import { FileUploadComponent } from "../shared/components/file-upload/file-upload.component";
 import { FileUploadComponent2 } from "../shared/components/file-upload2/file-upload2.component";
-
+import { FilePickerModule } from "ngx-awesome-uploader";
 import { HospitalRoutingModule } from "./hospital-routing.module";
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 @NgModule({
@@ -48,6 +48,7 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     NgApexchartsModule,
     PerfectScrollbarModule,
     GooglePlaceModule,
+    FilePickerModule,
   ],
 })
 export class HospitalModule {}

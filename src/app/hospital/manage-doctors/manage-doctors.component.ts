@@ -56,23 +56,23 @@ export class ManageDoctorsComponent
     this.loginForm = this.formBuilder.group(
       {
         firstName: [
-          "praba",
+          "",
           [Validators.required, Validators.pattern("^[a-zA-Z '-]+$")],
         ],
         email: [
-          "praba_wg@yahoo.co.in",
+          "",
           [Validators.required, Validators.email, Validators.minLength(5)],
         ],
         mobile: [
-          "9980568567",
+          "",
           [
             Validators.required,
             Validators.minLength(10),
             Validators.pattern("[0-9]{10}"),
           ],
         ],
-        password: ["qwqwqw", [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ["qwqwqw", Validators.required],
+        password: ["", [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ["", Validators.required],
       },
       {
         validator: MustMatch("password", "confirmPassword"),

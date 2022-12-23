@@ -13,7 +13,7 @@ import {
   FilePreviewModel,
 } from "ngx-awesome-uploader";
 import { environment } from "src/environments/environment";
-import { AuthService } from "../core";
+import { AuthService } from "../../core";
 export class DemoFilePickerAdapter extends FilePickerAdapter {
   userData: any;
 

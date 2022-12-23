@@ -79,7 +79,7 @@ export class establishmentComponent
   }
 
   ngOnInit() {
-    this.authService.currentUser.subscribe((x) => {
+    this.subs.sink = this.sharedDataService.doctorDetails.subscribe((x) => {
       this.userData = x;
     });
     this.establishmentForm = this.formBuilder.group({
@@ -111,7 +111,7 @@ export class establishmentComponent
         ],
         ClinicName: [
           this.userData.ClinicOneTimings.ClinicName,
-          [Validators.required, Validators.pattern("^[a-zA-Z '-]+$")],
+          [Validators.required, Validators.pattern("^[a-zA-Z '.-]+$")],
         ],
         ClinicLocation: ["", []],
         location: ["", []],
@@ -1045,10 +1045,7 @@ export class establishmentComponent
     }
   }
   updateLocalStorage(obj) {
-    const oldInfo = JSON.parse(localStorage.getItem("currentUser"));
-    localStorage.setItem("currentUser", JSON.stringify({ ...oldInfo, ...obj }));
-    this.authService.updateUserObjOnSave(
-      JSON.parse(localStorage.getItem("currentUser"))
-    );
+    const oldInfo = this.userData;
+    this.userData = { ...oldInfo, ...obj };
   }
 }

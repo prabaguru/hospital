@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { DemoFilePickerAdapter } from "../filepicker.adapter";
 import { FilePickerComponent, FilePreviewModel } from "ngx-awesome-uploader";
 import { HttpClient } from "@angular/common/http";
-import { AuthService, sharedDataService } from "../../core";
+import { AuthService, sharedDataService } from "../../../core";
 @Component({
   selector: "app-image-upload",
   templateUrl: "./image-upload.component.html",
@@ -13,8 +13,14 @@ export class ImageUploadComponent implements OnInit {
   @ViewChild("uploader", { static: true }) uploader: FilePickerComponent;
   public adapter = new DemoFilePickerAdapter(this.http, this.authService);
 
-  constructor(private http: HttpClient, private authService: AuthService) {
-    this.userData = this.authService.currentUserValue;
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private sharedDataService: sharedDataService
+  ) {
+    this.sharedDataService.doctorDetails.subscribe((x) => {
+      this.userData = x;
+    });
   }
 
   public ngOnInit(): void {

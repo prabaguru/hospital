@@ -34,6 +34,9 @@ export class ManageDoctorsComponent
   public showPassword2: boolean = false;
   lastLogin: string = "";
   loginForm: FormGroup;
+  doctorsListing = [];
+  active = [];
+  inactive = [];
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
@@ -75,6 +78,7 @@ export class ManageDoctorsComponent
         validator: MustMatch("password", "confirmPassword"),
       } as AbstractControlOptions
     );
+    this.getDoctorsByHId();
   }
   get f() {
     return this.loginForm.controls;
@@ -105,7 +109,6 @@ export class ManageDoctorsComponent
         .pipe(first())
         .subscribe({
           next: (data) => {
-            this.sharedDataService.setDoctorObj(data);
             this.sharedDataService.showNotification(
               "snackbar-success",
               "Registration Successfull. Add doctor details",
@@ -115,6 +118,7 @@ export class ManageDoctorsComponent
             this.close.nativeElement.click();
             this.loginForm.reset();
             this.submitted = false;
+            this.setDocDetails(data);
             // this.router.navigate(["/authentication/signin"], {
             //   queryParams: { loginType: "Doctor", email: this.f.email.value },
             // });
@@ -134,7 +138,34 @@ export class ManageDoctorsComponent
         });
     }
   }
-
+  getDoctorsByHId() {
+    this.subs.sink = this.apiService
+      .getDoctorsById(this.userData._id)
+      .subscribe({
+        next: (data: any) => {
+          this.doctorsListing = data.length > 0 ? data : [];
+          this.doctorsListing = data;
+          //console.log(this.doctorsListing);
+          this.active = this.doctorsListing.filter((x) => x.approved == true);
+          this.inactive = this.doctorsListing.filter(
+            (x) => x.approved == false
+          );
+        },
+        error: (err) => {
+          this.sharedDataService.showNotification(
+            "snackbar-danger",
+            err,
+            "top",
+            "center"
+          );
+        },
+      });
+  }
+  setDocDetails(data: any) {
+    this.sharedDataService.setDoctorObj(null);
+    this.sharedDataService.setDoctorObj(data);
+    this.router.navigate(["/hospital/doctordetails"]);
+  }
   public togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }

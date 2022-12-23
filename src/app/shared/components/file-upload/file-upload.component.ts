@@ -35,7 +35,9 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
     public fb: FormBuilder
   ) {}
   ngOnInit() {
-    this.userData = this.authService.currentUserValue;
+    this.sharedDataService.doctorDetails.subscribe((x) => {
+      this.userData = x;
+    });
     //console.log(this.userData);
     this.form = this.fb.group({
       file: [null],
@@ -158,13 +160,8 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
   }
 
   updateLocalStorage(obj) {
-    const oldInfo = JSON.parse(localStorage.getItem("currentUser"));
-    localStorage.setItem("currentUser", JSON.stringify({ ...oldInfo, ...obj }));
-    this.authService.updateUserObjOnSave(
-      JSON.parse(localStorage.getItem("currentUser"))
-    );
-    this.userData = [];
-    this.userData = this.authService.currentUserValue;
+    const oldInfo = this.userData;
+    this.userData = { ...oldInfo, ...obj };
     this.preview = null;
   }
 }

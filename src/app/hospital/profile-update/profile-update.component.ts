@@ -108,7 +108,7 @@ export class UpdateProfileComponent
         confirmPassword: this.f["confirmPassword"].value,
       };
       this.subs.sink = this.apiService
-        .update(obj)
+        .updateHospital(obj)
         .pipe(first())
         .subscribe({
           next: (res) => {

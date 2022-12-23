@@ -57,7 +57,7 @@ export class DashboardComponent
       .subscribe({
         next: (data: any) => {
           this.doctorsListing = [];
-          this.doctorsListing = data.filter((x) => x.approved == true);
+          this.doctorsListing = data.length > 0 ? data : [];
           //console.log(this.doctorsListing);
           this.active = this.doctorsListing.filter((x) => x.approved == true);
           this.inactive = this.doctorsListing.filter(

@@ -5,22 +5,79 @@
         <div class="card">
           <div class="header">
             <h2>
-              <strong>Manage Doctors</strong>
+              <strong><mat-icon> medication </mat-icon> Manage Doctors</strong>
             </h2>
-
-            <div class="float-end">
-              <button
-                mat-raised-button
-                class="matbutton"
-                color="primary"
-                data-bs-toggle="modal"
-                data-bs-target="#staticBackdropMD"
-              >
-                <mat-icon matPrefix class="form-icon">note_add</mat-icon> Add
-                Doctor
-              </button>
+            <!-- <div class="row"></div> -->
+          </div>
+          <div class="body">
+            <div class="row clearfix" *ngIf="doctorsListing.length > 0">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      #
+                      <button
+                        mat-raised-button
+                        color="primary"
+                        matBadge="{{ doctorsListing.length }}"
+                        matBadgePosition="before"
+                        matBadgeColor="accent"
+                        class="dFBtn"
+                      >
+                        Doctors Found
+                      </button>
+                    </th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Active</th>
+                    <th scope="col">
+                      Action
+                      <span class="float-end">
+                        <button
+                          mat-raised-button
+                          class="matbutton"
+                          color="primary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#staticBackdropMD"
+                        >
+                          <mat-icon matPrefix class="form-icon"
+                            >note_add</mat-icon
+                          >
+                          Add Doctor
+                        </button>
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of doctorsListing; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td class="DocName">Dr. {{ item.firstName }}</td>
+                    <td>
+                      <span class="col-green fw-bold" *ngIf="item.approved"
+                        >Active</span
+                      >
+                      <span class="col-red fw-bold" *ngIf="!item.approved"
+                        >InActive</span
+                      >
+                    </td>
+                    <td>
+                      <button
+                        mat-button
+                        [matMenuTriggerFor]="menu"
+                        class="header-dropdown"
+                      >
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="setDocDetails(item)">
+                          <mat-icon>edit</mat-icon>Edit
+                        </button>
+                      </mat-menu>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="row"></div>
           </div>
         </div>
       </div>

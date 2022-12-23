@@ -88,14 +88,16 @@ export class ProfileSettingsComponent
     private router: Router
   ) {
     super();
+    this.subs.sink = this.sharedDataService.doctorDetails.subscribe((x) => {
+      this.userData = x;
+    });
+    if (this.userData === null || this.userData === undefined) {
+      this.router.navigate(["/hospital/doctors"]);
+      return;
+    }
   }
 
   ngOnInit() {
-    //this.userData = this.authService.currentUserValue;
-    this.subs.sink = this.sharedDataService.doctorDetails.subscribe((x) => {
-      this.userData = x.doctor;
-      console.log(this.userData);
-    });
     this.cage = this.userData.age ? this.userData.age : "";
     this.preliminaryForm = this.formBuilder.group({
       id: [this.userData._id, []],
@@ -111,14 +113,17 @@ export class ProfileSettingsComponent
         this.userData.email,
         [Validators.required, Validators.email, Validators.minLength(5)],
       ],
-      mobile: [this.userData.mobile.number],
-      smobile: [
-        this.userData.smobile,
+      mobile: [
+        this.userData.mobile.number,
         [
           Validators.required,
           Validators.pattern("^[0-9]*$"),
           Validators.minLength(10),
         ],
+      ],
+      smobile: [
+        this.userData.smobile,
+        [Validators.pattern("^[0-9]*$"), Validators.minLength(10)],
       ],
       dob: [this.userData.dob, [Validators.required]],
       age: [this.userData.age, []],
@@ -127,11 +132,7 @@ export class ProfileSettingsComponent
       gender: [this.userData.gender, []],
       AadhaarNo: [
         this.userData.AadhaarNo,
-        [
-          Validators.required,
-          Validators.pattern("^[0-9]*$"),
-          Validators.minLength(12),
-        ],
+        [Validators.pattern("^[0-9]*$"), Validators.minLength(12)],
       ],
       tab2: [true],
     });
@@ -199,8 +200,8 @@ export class ProfileSettingsComponent
         validator: MustMatch("password", "confirmPassword"),
       } as AbstractControlOptions
     );
-    this.preliminaryForm.controls.mobile.disable();
-    this.preliminaryForm.controls.email.disable();
+    // this.preliminaryForm.controls.mobile.disable();
+    // this.preliminaryForm.controls.email.disable();
     //this.establishmentForm.controls.sundayStartTimeCtrl.disable();
 
     this.specialisationOptions = this.specialisationCtrl.valueChanges.pipe(
@@ -289,9 +290,31 @@ export class ProfileSettingsComponent
     if (this.preliminaryForm.invalid) {
       return;
     }
-
+    let obj = {};
+    obj = {
+      id: this.userData._id,
+      firstName: this.preliminaryForm.value.firstName,
+      lastName: this.preliminaryForm.value.lastName,
+      email: this.preliminaryForm.value.email,
+      mobile: {
+        nationalNumber: `0${this.preliminaryForm.value.mobile}`,
+        e164Number: `+91${this.preliminaryForm.value.mobile}`,
+        number: this.preliminaryForm.value.mobile,
+        internationalNumber: `+91${this.preliminaryForm.value.mobile}`,
+        countryCode: "IN",
+        dialCode: "+91",
+      },
+      age: this.preliminaryForm.value.age,
+      smobile: this.preliminaryForm.value.smobile,
+      gender: this.preliminaryForm.value.gender,
+      AadhaarNo: this.preliminaryForm.value.AadhaarNo,
+      dob: this.preliminaryForm.value.dob,
+      bloodGroup: this.preliminaryForm.value.bloodGroup,
+      address: this.preliminaryForm.value.address,
+      tab2: true,
+    };
     this.subs.sink = this.apiService
-      .update(this.preliminaryForm.value)
+      .update(obj)
       .pipe(first())
       .subscribe({
         next: (data) => {
@@ -301,8 +324,7 @@ export class ProfileSettingsComponent
             "top",
             "center"
           );
-          //this.router.navigate(["/authentication/signin"]);
-          this.updateLocalStorage(this.preliminaryForm.value);
+          this.updateLocalStorage(obj);
         },
         error: (error) => {
           this.sharedDataService.showNotification(
@@ -522,10 +544,7 @@ export class ProfileSettingsComponent
     this.p["id"].setValue(this.userData._id);
   }
   updateLocalStorage(obj) {
-    const oldInfo = JSON.parse(localStorage.getItem("currentUser"));
-    localStorage.setItem("currentUser", JSON.stringify({ ...oldInfo, ...obj }));
-    this.authService.updateUserObjOnSave(
-      JSON.parse(localStorage.getItem("currentUser"))
-    );
+    const oldInfo = this.userData;
+    this.userData = { ...oldInfo, ...obj };
   }
 }

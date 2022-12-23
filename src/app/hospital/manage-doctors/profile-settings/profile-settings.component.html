@@ -4,7 +4,18 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="card">
           <div class="header">
-            <h2 translate><strong>Profile</strong> Settings</h2>
+            <h2 translate>
+              <strong>Doctor Profile</strong> Settings
+              <button
+                mat-raised-button
+                class="matbutton"
+                color="primary"
+                [routerLink]="['/hospital/doctors']"
+              >
+                <mat-icon>undo</mat-icon> Back
+              </button>
+            </h2>
+            <div class="float-end"></div>
           </div>
           <div class="body">
             <div
@@ -16,9 +27,10 @@
                 !userData?.tab5
               "
             >
-              <strong>Hi Doctor!</strong> Your Profile is not verified. Please
-              fill all the mandatory information in the tabs below and upload
-              Profile Pic to get verified and online bookings.
+              <strong>Dr- {{ f["firstName"].value.toUpperCase() }}</strong>
+              profile is not verified. Please fill all the mandatory information
+              in the tabs below and upload Profile Pic to get verified and
+              online bookings.
               <mat-icon>error</mat-icon>
             </div>
             <div
@@ -30,8 +42,9 @@
                 userData?.tab5
               "
             >
-              <strong>Hi Doctor!</strong> Your Profile is verified with us. Good
-              day. <mat-icon>check_circle</mat-icon>
+              <strong>Dr- {{ f["firstName"].value.toUpperCase() }}</strong>
+              profile is verified. Good day.
+              <mat-icon>check_circle</mat-icon>
             </div>
             <mat-accordion class="example-headers-align">
               <mat-expansion-panel
@@ -124,11 +137,25 @@
                             matInput
                             formControlName="mobile"
                             placeholder="Mobile"
-                            maxlength="13"
+                            maxlength="10"
                             [ngClass]="{
                               'is-invalid': submitted && f.mobile.errors
                             }"
                           />
+                          <div
+                            *ngIf="submitted && f.mobile.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.mobile.errors.required">
+                              Mobile no is required
+                            </div>
+                            <div *ngIf="f.mobile.errors.pattern">
+                              Only numbers Allowed
+                            </div>
+                            <div *ngIf="f.mobile.errors.minlength">
+                              Mobile no must have 10 digits
+                            </div>
+                          </div>
                         </mat-form-field>
                       </div>
                       <div class="col-md-3">
@@ -279,7 +306,6 @@
                   </div>
                 </form>
               </mat-expansion-panel>
-
               <mat-expansion-panel
                 [expanded]="step === 1"
                 [disabled]="!userData?.tab2"
@@ -585,9 +611,6 @@
                 <div class="container">
                   <div class="row">
                     <div class="card">
-                      <div class="header">
-                        <h2>Enter Clinic details</h2>
-                      </div>
                       <div class="body">
                         <clinic1></clinic1>
                       </div>
@@ -690,7 +713,7 @@
                     <mat-icon>upload_file</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
-                <!-- <div class="container">
+                <div class="container">
                   <div class="row">
                     <div class="col-md-4">
                       Upload Profile Pic<span class="mbdata"> (2MB Max)</span>
@@ -716,7 +739,7 @@
                       ></app-file-upload2>
                     </div>
                   </div>
-                </div> -->
+                </div>
                 <mat-action-row>
                   <a
                     mat-button
@@ -736,170 +759,6 @@
                   </a>
                 </mat-action-row>
               </mat-expansion-panel>
-
-              <mat-expansion-panel
-                *ngIf="userData?.tab5"
-                [expanded]="step === 5"
-                (opened)="setStep(5)"
-                hideToggle
-              >
-                <mat-expansion-panel-header>
-                  <mat-panel-title> Change Profile Password </mat-panel-title>
-                  <mat-icon>password</mat-icon>
-                </mat-expansion-panel-header>
-                <form
-                  [formGroup]="profileFormPass"
-                  class="profile-form"
-                  autocomplete="off"
-                  (ngSubmit)="saveChanges()"
-                >
-                  <div class="container">
-                    <div class="row clearfix">
-                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="row">
-                          <div class="col-md-3 mb-0">
-                            <mat-label class="fw-bold"
-                              >Current Password</mat-label
-                            >
-                            <mat-form-field
-                              appearance="outline"
-                              class="example-full-width"
-                            >
-                              <mat-label>Current Password</mat-label>
-                              <mat-icon
-                                matSuffix
-                                class="auth-page-icon"
-                                (click)="togglePasswordVisibility2()"
-                                >{{
-                                  showPassword2
-                                    ? "visibility"
-                                    : "visibility_off"
-                                }}</mat-icon
-                              >
-                              <input
-                                [type]="showPassword2 ? 'text' : 'password'"
-                                formControlName="currentPwd"
-                                matInput
-                                autocomplete="off"
-                                maxlength="10"
-                              />
-                            </mat-form-field>
-                            <div
-                              *ngIf="submitted && p.currentPwd.errors"
-                              class="custom-error mb-3"
-                            >
-                              <div *ngIf="p.currentPwd.errors.required">
-                                Current Password is required
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3 mb-0">
-                            <mat-label class="fw-bold"
-                              >Change Password</mat-label
-                            >
-                            <mat-form-field
-                              appearance="outline"
-                              class="example-full-width"
-                            >
-                              <mat-label>Password</mat-label>
-                              <mat-icon
-                                matSuffix
-                                class="auth-page-icon"
-                                (click)="togglePasswordVisibility()"
-                                >{{
-                                  showPassword ? "visibility" : "visibility_off"
-                                }}</mat-icon
-                              >
-                              <input
-                                [type]="showPassword ? 'text' : 'password'"
-                                formControlName="password"
-                                matInput
-                                autocomplete="off"
-                                maxlength="10"
-                              />
-                            </mat-form-field>
-                            <div
-                              *ngIf="submitted && p.password.errors"
-                              class="custom-error mb-3"
-                            >
-                              <div *ngIf="p.password.errors.required">
-                                Password is required
-                              </div>
-                              <div *ngIf="p.password.errors.minlength">
-                                Password must be at least 6 characters
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3 mb-0">
-                            <mat-form-field
-                              appearance="outline"
-                              class="example-full-width"
-                            >
-                              <mat-label>Confirm Password</mat-label>
-                              <mat-icon
-                                matSuffix
-                                class="auth-page-icon"
-                                (click)="togglePasswordVisibility()"
-                                >{{
-                                  showPassword ? "visibility" : "visibility_off"
-                                }}</mat-icon
-                              >
-                              <input
-                                [type]="showPassword ? 'text' : 'password'"
-                                formControlName="confirmPassword"
-                                matInput
-                                autocomplete="off"
-                                maxlength="10"
-                              />
-                            </mat-form-field>
-                            <div
-                              *ngIf="submitted && p.confirmPassword.errors"
-                              class="custom-error mb-3"
-                            >
-                              <div *ngIf="p.confirmPassword.errors.required">
-                                Confirm Password is required
-                              </div>
-                              <div *ngIf="p.confirmPassword.errors.mustMatch">
-                                Password and confirm password do not match
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="float-start">
-                        <a
-                          mat-raised-button
-                          color="primary"
-                          href="javascript:void(0)"
-                          (click)="resetPassworsform()"
-                        >
-                          Reset </a
-                        >&nbsp;
-                        <button mat-raised-button color="primary" type="submit">
-                          Save
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </mat-expansion-panel>
-
-              <!-- <mat-expansion-panel
-                *ngIf="userData?.tab5"
-                [expanded]="step === 6"
-                (opened)="setStep(6)"
-                hideToggle
-              >
-                <mat-expansion-panel-header>
-                  <mat-panel-title> Upload Clinic Images </mat-panel-title>
-                  <mat-icon>image</mat-icon>
-                </mat-expansion-panel-header>
-                <app-image-upload></app-image-upload>
-              </mat-expansion-panel> -->
             </mat-accordion>
           </div>
         </div>

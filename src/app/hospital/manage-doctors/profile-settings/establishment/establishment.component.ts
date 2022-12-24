@@ -67,6 +67,7 @@ export class establishmentComponent
   clinicAddress: string = "";
   cliniclocation = {};
   coordinates: any;
+  docData: any;
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
@@ -82,6 +83,7 @@ export class establishmentComponent
     this.subs.sink = this.sharedDataService.doctorDetails.subscribe((x) => {
       this.userData = x;
     });
+    this.docData = this.authService.currentUserValue;
     this.establishmentForm = this.formBuilder.group({
       id: [this.userData._id, []],
       ClinicOneTimings: this.formBuilder.group({
@@ -110,7 +112,9 @@ export class establishmentComponent
           ],
         ],
         ClinicName: [
-          this.userData.ClinicOneTimings.ClinicName,
+          this.userData.ClinicOneTimings.ClinicName
+            ? this.userData.ClinicOneTimings.ClinicName
+            : this.docData.firstName,
           [Validators.required, Validators.pattern("^[a-zA-Z '.-]+$")],
         ],
         ClinicLocation: ["", []],

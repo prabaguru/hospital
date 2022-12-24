@@ -135,6 +135,10 @@ export class ProfileSettingsComponent
         [Validators.pattern("^[0-9]*$"), Validators.minLength(12)],
       ],
       tab2: [true],
+      patientBooking: [
+        this.userData.patientBooking ? this.userData.patientBooking : true,
+        [],
+      ],
     });
     this.educationForm = this.formBuilder.group({
       tab3: [true],
@@ -312,6 +316,8 @@ export class ProfileSettingsComponent
       bloodGroup: this.preliminaryForm.value.bloodGroup,
       address: this.preliminaryForm.value.address,
       tab2: true,
+      preliminaryData: true,
+      patientBooking: this.preliminaryForm.value.patientBooking,
     };
     this.subs.sink = this.apiService
       .update(obj)

@@ -6,6 +6,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { UpdateProfileComponent } from "./profile-update/profile-update.component";
 import { ManageDoctorsComponent } from "./manage-doctors/manage-doctors.component";
 import { ProfileSettingsComponent } from "./manage-doctors/profile-settings/profile-settings.component";
+import { ProfileViewComponent } from "./manage-doctors/profile-view/profile-view.component";
 const routes: Routes = [
   // {
   //   path: "",
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: "doctordetails",
     component: ProfileSettingsComponent,
+  },
+  {
+    path: "viewdoctordetails",
+    component: ProfileViewComponent,
   },
 ];
 @NgModule({

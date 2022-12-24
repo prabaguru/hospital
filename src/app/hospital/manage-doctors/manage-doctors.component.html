@@ -72,6 +72,9 @@
                         <button mat-menu-item (click)="setDocDetails(item)">
                           <mat-icon>edit</mat-icon>Edit
                         </button>
+                        <button mat-menu-item (click)="setViewDocDetails(item)">
+                          <mat-icon>visibility</mat-icon>View
+                        </button>
                       </mat-menu>
                     </td>
                   </tr>
@@ -84,7 +87,6 @@
     </div>
   </div>
 </section>
-
 <div
   class="modal fade"
   id="staticBackdropMD"
@@ -103,11 +105,15 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
+          (click)="reset()"
         ></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <label>First Name</label>
+          <label
+            >Doctor First Name
+            <mat-error class="mobno"> (Do not include Dr.)</mat-error></label
+          >
           <div class="form-group auth-form-group mb-4">
             <mat-icon matSuffix class="auth-page-icon">face</mat-icon>
             <input
@@ -262,6 +268,7 @@
           class="btn btn-secondary"
           #closeMD
           data-bs-dismiss="modal"
+          (click)="reset()"
         >
           Close
         </button>

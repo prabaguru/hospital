@@ -1,0 +1,465 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="header">
+            <h2>
+              <strong>Dr- {{ doc.firstName.toUpperCase() }} </strong> Profile
+              View
+              <button
+                mat-raised-button
+                class="matbutton"
+                color="primary"
+                [routerLink]="['/hospital/doctors']"
+              >
+                <mat-icon>undo</mat-icon> Back
+              </button>
+            </h2>
+          </div>
+          <div class="body">
+            <mat-accordion *ngIf="doc">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Personal data </mat-panel-title>
+                  <mat-panel-description
+                    >Dr {{ doc.firstName }}
+                    {{ doc?.lastName }}</mat-panel-description
+                  >
+                </mat-expansion-panel-header>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>Name</td>
+                      <td>
+                        Dr {{ doc.firstName }} {{ doc?.lastName }} -
+                        {{ doc.gender }}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Email & Phone No's</td>
+                      <td>
+                        {{ doc.email }}, Mob#1 - {{ doc.mobile.number }}, Mob#2
+                        -
+                        {{ doc.smobile }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>DOB & Age</td>
+                      <td>{{ dob }}, Age:- {{ doc.age }}</td>
+                    </tr>
+                    <tr>
+                      <td>Address</td>
+                      <td>{{ doc.address }}</td>
+                    </tr>
+                    <tr>
+                      <td>Aadhaar</td>
+                      <td>{{ doc.AadhaarNo }}</td>
+                    </tr>
+                    <tr>
+                      <td>Blood Group</td>
+                      <td>{{ doc.bloodGroup }}</td>
+                    </tr>
+                    <tr>
+                      <td>Registered Date</td>
+                      <td>{{ cdate }}</td>
+                    </tr>
+                    <tr>
+                      <td>Last login Date</td>
+                      <td>{{ ldate }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Education </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td width="40%">DoctorType</td>
+                      <td>{{ doc.graduation.DoctorType?.name }}</td>
+                    </tr>
+                    <tr>
+                      <td>Overall Exp</td>
+                      <td>{{ doc.graduation.overallExperience }} Years</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table
+                  class="table"
+                  *ngIf="
+                    doc.graduation.Graduation === 'UG' ||
+                    doc.graduation.Graduation === 'PG'
+                  "
+                >
+                  <tbody>
+                    <tr>
+                      <td width="40%">
+                        <span class="fw-bold">UNDER GRADUATION</span>
+                      </td>
+                      <td>
+                        {{ doc.graduation.qualificationUG.sName }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>College</td>
+                      <td class="capitalize">
+                        {{ doc.graduation.CollegeUG }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>CompletedYear</td>
+                      <td class="capitalize">
+                        {{ doc.graduation.CompletionYearUG }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>RegNo</td>
+                      <td class="capitalize">
+                        {{ doc.graduation.MedicalRegistrationNoUG }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>MedCouncil</td>
+                      <td class="capitalize">
+                        {{ doc.graduation.MedicalCouncilNameUG }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table" *ngIf="doc.graduation.Graduation === 'PG'">
+                  <tbody>
+                    <tr>
+                      <td width="40%">
+                        <span class="fw-bold">POST GRADUATION</span>
+                      </td>
+                      <td>
+                        {{ doc.graduation.qualificationPG.sName }} - ({{
+                          doc.graduation.specialisationPG.name
+                        }})
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>College</td>
+                      <td class="capitalize">
+                        {{ doc.graduation.CollegePG }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>CompletedYear</td>
+                      <td class="capitalize">
+                        {{ doc.graduation.CompletionYearPG }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>RegNo</td>
+                      <td class="capitalize">
+                        {{ doc.graduation.MedicalRegistrationNoPG }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>MedCouncil</td>
+                      <td class="capitalize">
+                        {{ doc.graduation.MedicalCouncilNamePG }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Establishment </mat-panel-title>
+                </mat-expansion-panel-header>
+                <span *ngIf="doc.ClinicOneTimings.active">
+                  <ul class="timeslot m-0">
+                    <li class="lsstyle">
+                      <h3>
+                        Clinic/Hospital Name:
+                        {{ doc.ClinicOneTimings.ClinicName }}
+                      </h3>
+                      <p>
+                        <strong>Address:</strong>
+                        {{ doc.ClinicOneTimings.ClinicLocation.address }}
+                      </p>
+                    </li>
+                    <li>
+                      <h4>
+                        ConsultationFees:
+                        {{ doc.ClinicOneTimings.ConsultationFeesC1 }}
+                      </h4>
+                    </li>
+                  </ul>
+                  <h5 class="mt-3">Clinic Timings</h5>
+                  <table class="table">
+                    <tbody>
+                      <tr *ngIf="doc.ClinicOneTimings.ComBrStarttime">
+                        <td width="25%">BreakTime</td>
+                        <td>
+                          {{ doc.ClinicOneTimings.ComBrStarttime }} -
+                          {{ doc.ClinicOneTimings.ComBrEndtime }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Monday</td>
+                        <td>
+                          <span>
+                            <span
+                              class="timings"
+                              *ngIf="doc.ClinicOneTimings.Monday"
+                            >
+                              {{ doc.ClinicOneTimings.MonStarttime }} -
+                              {{ doc.ClinicOneTimings.MonEndtime }}
+                            </span>
+                            <span
+                              class="timings2"
+                              *ngIf="!doc.ClinicOneTimings.Monday"
+                            >
+                              Holiday
+                            </span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Tuesday</td>
+                        <td>
+                          <span
+                            class="timings"
+                            *ngIf="doc.ClinicOneTimings.Tuesday"
+                          >
+                            {{ doc.ClinicOneTimings.TueStarttime }} -
+                            {{ doc.ClinicOneTimings.TueEndtime }}
+                          </span>
+                          <span
+                            class="timings2"
+                            *ngIf="!doc.ClinicOneTimings.Tuesday"
+                          >
+                            Holiday
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Wednesday</td>
+                        <td>
+                          <span
+                            class="timings"
+                            *ngIf="doc.ClinicOneTimings.Wednesday"
+                          >
+                            {{ doc.ClinicOneTimings.WedStarttime }} -
+                            {{ doc.ClinicOneTimings.WedEndtime }}
+                          </span>
+                          <span
+                            class="timings2"
+                            *ngIf="!doc.ClinicOneTimings.Wednesday"
+                          >
+                            Holiday
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Thursday</td>
+                        <td>
+                          <span
+                            class="timings"
+                            *ngIf="doc.ClinicOneTimings.Thursday"
+                          >
+                            {{ doc.ClinicOneTimings.ThuStarttime }} -
+                            {{ doc.ClinicOneTimings.ThuEndtime }}
+                          </span>
+                          <span
+                            class="timings2"
+                            *ngIf="!doc.ClinicOneTimings.Thursday"
+                          >
+                            Holiday
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Friday</td>
+                        <td>
+                          <span
+                            class="timings"
+                            *ngIf="doc.ClinicOneTimings.Friday"
+                          >
+                            {{ doc.ClinicOneTimings.FriStarttime }} -
+                            {{ doc.ClinicOneTimings.FriEndtime }}
+                          </span>
+                          <span
+                            class="timings2"
+                            *ngIf="!doc.ClinicOneTimings.Friday"
+                          >
+                            Holiday
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Saturday</td>
+                        <td>
+                          <span
+                            class="timings"
+                            *ngIf="doc.ClinicOneTimings.Saturday"
+                          >
+                            {{ doc.ClinicOneTimings.SatStarttime }} -
+                            {{ doc.ClinicOneTimings.SatEndtime }}
+                          </span>
+                          <span
+                            class="timings2"
+                            *ngIf="!doc.ClinicOneTimings.Saturday"
+                          >
+                            Holiday
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Sunday</td>
+                        <td>
+                          <span
+                            class="timings"
+                            *ngIf="doc.ClinicOneTimings.Sunday"
+                          >
+                            {{ doc.ClinicOneTimings.SunStarttime }} -
+                            {{ doc.ClinicOneTimings.SunEndtime }}
+                          </span>
+                          <span
+                            class="timings2"
+                            *ngIf="!doc.ClinicOneTimings.Sunday"
+                          >
+                            Holiday
+                          </span>
+                        </td>
+                      </tr>
+                      <tr *ngIf="doc.services">
+                        <td colspan="2">
+                          <h5>About Doctor & Services</h5>
+                          <div
+                            [innerHTML]="doc.services"
+                            style="
+                              text-transform: capitalize;
+                              font-size: 14px;
+                              line-height: 25px;
+                            "
+                          ></div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </span>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Documents</mat-panel-title>
+                </mat-expansion-panel-header>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>DP</td>
+                      <td>
+                        <img
+                          [src]="doc.image?.imageUrl"
+                          alt="DP"
+                          class="img-thumbnail"
+                          width="70"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Aadhaar</td>
+                      <td>
+                        <a
+                          *ngIf="doc.doc1?.docUrl"
+                          href="{{ doc.doc1.docUrl }}"
+                          class="img-thumbnail font12"
+                          target="_blank"
+                          >{{ doc.doc1.docName }}</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Medical Degree Certificate</td>
+                      <td>
+                        <a
+                          *ngIf="doc.doc2?.docUrl"
+                          href="{{ doc.doc2.docUrl }}"
+                          class="img-thumbnail font12"
+                          target="_blank"
+                          >{{ doc.doc2.docName }}</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Appointments</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p *ngIf="appClinic1">
+                  <span *ngIf="appClinic1">
+                    <b>Clinic Appointments</b>: {{ getAppointments.length }}
+                  </span>
+
+                  <span *ngIf="appClinic1">
+                    <b>Total Appointments</b>:
+                    {{ getAppointments.length }}
+                  </span>
+                </p>
+                <span *ngIf="doc.ClinicOneTimings.active">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="getAllDoctorAppoinmentsById(doc._id, 'Clinic1')"
+                  >
+                    Get Appointments
+                  </button>
+                  <table class="table" *ngIf="appClinic1">
+                    <tbody>
+                      <tr>
+                        <td>Ongoing</td>
+                        <td>
+                          {{ pending.length }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Closed</td>
+                        <td>
+                          {{ closed.length }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </span>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Activate/Deactivate</mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <button
+                  *ngIf="doc.approved"
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="deactivateDoctor(doc._id, false)"
+                >
+                  Deactivate this Doctor
+                </button>
+
+                <button
+                  *ngIf="!doc.approved"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="deactivateDoctor(doc._id, true)"
+                >
+                  Activate this Doctor
+                </button>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

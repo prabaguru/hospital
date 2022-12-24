@@ -161,10 +161,19 @@ export class ManageDoctorsComponent
         },
       });
   }
+  reset() {
+    this.submitted = false;
+    this.loginForm.reset();
+  }
   setDocDetails(data: any) {
     this.sharedDataService.setDoctorObj(null);
     this.sharedDataService.setDoctorObj(data);
     this.router.navigate(["/hospital/doctordetails"]);
+  }
+  setViewDocDetails(data: any) {
+    this.sharedDataService.setDoctorObj(null);
+    this.sharedDataService.setDoctorObj(data);
+    this.router.navigate(["/hospital/viewdoctordetails"]);
   }
   public togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;

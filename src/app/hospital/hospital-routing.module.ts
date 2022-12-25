@@ -33,6 +33,13 @@ const routes: Routes = [
     path: "viewdoctordetails",
     component: ProfileViewComponent,
   },
+  {
+    path: "users",
+    loadChildren: () =>
+      import("./clinic-users/advance-table.module").then(
+        (m) => m.AdvanceTableModule
+      ),
+  },
 ];
 @NgModule({
   declarations: [],

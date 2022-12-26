@@ -62,6 +62,7 @@ export class SignupComponent
           [Validators.required, Validators.email, Validators.minLength(5)],
         ],
         role: ["Hospital", Validators.required],
+        infraType: ["", Validators.required],
         mobile: ["", [Validators.required]],
         password: ["", [Validators.required, Validators.minLength(6)]],
         confirmPassword: ["", Validators.required],

@@ -79,7 +79,7 @@ export class FormDialogComponent
           this.advanceTable.email,
           [Validators.required, Validators.email, Validators.minLength(5)],
         ],
-        role: ["ClinicUser", []],
+        role: ["Clinic/Hospital-User", []],
         dob: [this.advanceTable.dob, [Validators.required]],
         regType: [this.advanceTable.regType, [Validators.required]],
         mobile: [this.advanceTable.mobile, [Validators.required]],

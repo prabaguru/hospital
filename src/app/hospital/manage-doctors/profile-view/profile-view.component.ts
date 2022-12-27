@@ -172,10 +172,11 @@ export class ProfileViewComponent
     obj = {
       id: did,
       approved: active,
+      status: active,
     };
     this.subs.sink = this.apiService.updateSingle(obj).subscribe({
       next: (data: any) => {
-        //this.doc.approved = active;
+        this.doc.approved = active;
         let mess = "";
         active
           ? (mess = "Doctor activated Successfully...")

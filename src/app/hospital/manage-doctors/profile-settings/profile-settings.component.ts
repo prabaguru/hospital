@@ -142,6 +142,8 @@ export class ProfileSettingsComponent
     });
     this.educationForm = this.formBuilder.group({
       tab3: [true],
+      tab4: [true],
+      tab5: [true],
       id: [this.userData._id, []],
       graduation: this.formBuilder.group({
         id: [this.userData._id, []],

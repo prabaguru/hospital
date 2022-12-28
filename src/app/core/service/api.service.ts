@@ -108,6 +108,20 @@ export class ApiService {
       observe: "events",
     });
   }
+  uploadFile3(id, profileImage: File, imgUnlink): Observable<any> {
+    var formData: any = new FormData();
+    formData.append("id", id);
+    formData.append("file", profileImage);
+    formData.append("imgUnlink", imgUnlink);
+    return this.http.put(
+      `${environment.apiUrl}/hospitals/uploadFile`,
+      formData,
+      {
+        reportProgress: true,
+        observe: "events",
+      }
+    );
+  }
   private handleError(err) {
     //console.log("error caught in service");
     //console.error(err);

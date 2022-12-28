@@ -62,7 +62,7 @@ export class UpdateProfileComponent
             Validators.required,
             Validators.minLength(3),
             Validators.maxLength(50),
-            Validators.pattern("^[a-zA-Z '-]+$"),
+            Validators.pattern("^[a-zA-Z '.-]+$"),
           ]
         ),
         email: new FormControl(
@@ -82,9 +82,16 @@ export class UpdateProfileComponent
           },
           [Validators.required, Validators.maxLength(10)]
         ),
+        onlineStatus: [
+          this.userData.onlineStatus ? this.userData.onlineStatus : "",
+          [Validators.required],
+        ],
         currentPwd: ["", [Validators.required]],
         password: ["", [Validators.required, Validators.minLength(6)]],
         confirmPassword: ["", Validators.required],
+        address: [this.userData.address ? this.userData.address : ""],
+        AadhaarNo: [this.userData.AadhaarNo ? this.userData.AadhaarNo : ""],
+        about: [this.userData.about ? this.userData.about : ""],
       },
       {
         validator: MustMatch("password", "confirmPassword"),
@@ -139,11 +146,70 @@ export class UpdateProfileComponent
         });
     }
   }
-
+  UpdateProfile() {
+    if (
+      this.userData.onlineStatus === this.f["onlineStatus"].value &&
+      this.userData.address === this.f["address"].value &&
+      this.userData.AadhaarNo === this.f["AadhaarNo"].value &&
+      this.userData.about === this.f["about"].value
+    ) {
+      return;
+    } else {
+      let obj = {};
+      obj = {
+        id: this.f["id"].value,
+        onlineStatus: this.f["onlineStatus"].value,
+        address: this.f["address"].value,
+        AadhaarNo: this.f["AadhaarNo"].value,
+        about: this.f["about"].value,
+      };
+      this.subs.sink = this.apiService
+        .updateHospital(obj)
+        .pipe(first())
+        .subscribe({
+          next: (res) => {
+            this.submitted = false;
+            this.sharedDataService.showNotification(
+              "snackbar-success",
+              "Profile Updated successfully",
+              "top",
+              "center"
+            );
+            let objN = {};
+            objN = {
+              onlineStatus: this.f["onlineStatus"].value,
+              address: this.f["address"].value,
+              AadhaarNo: this.f["AadhaarNo"].value,
+              about: this.f["about"].value,
+            };
+            this.updateLocalStorage(objN);
+          },
+          error: (error) => {
+            this.submitted = false;
+            this.sharedDataService.showNotification(
+              "snackbar-danger",
+              error,
+              "top",
+              "center"
+            );
+          },
+          complete: () => {},
+        });
+    }
+  }
   public togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
   public togglePasswordVisibility2(): void {
     this.showPassword2 = !this.showPassword2;
+  }
+  updateLocalStorage(obj) {
+    const oldInfo = JSON.parse(localStorage.getItem("hospitals"));
+    localStorage.setItem("hospitals", JSON.stringify({ ...oldInfo, ...obj }));
+    this.authService.updateUserObjOnSave(
+      JSON.parse(localStorage.getItem("hospitals"))
+    );
+    this.userData = [];
+    this.userData = this.authService.currentUserValue;
   }
 }

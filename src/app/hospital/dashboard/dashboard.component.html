@@ -3,6 +3,22 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="card">
+          <input
+            type="text"
+            class="form-control p-3"
+            ngxDaterangepickerMd
+            [showCustomRangeLabel]="true"
+            [alwaysShowCalendars]="true"
+            [ranges]="ranges"
+            [linkedCalendars]="true"
+            [isInvalidDate]="isInvalidDate"
+            [showClearButton]="true"
+            [maxDate]="maxDate"
+            [minDate]="minDate"
+            [dateLimit]="dateLimit"
+            (change)="change($event)"
+            placeholder="Select Date"
+          />
           <div class="header">
             <h2>
               <strong>Dashboard</strong> & Report Analysis -
@@ -12,27 +28,36 @@
           <div class="body">
             <div class="text-center">
               <div class="row clearfix">
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-3">
+                  <h2 class="font-25 col-orange">
+                    {{ getAppointments.appCount }}
+                  </h2>
+                  <small
+                    ><i class="fas fa-arrow-up col-orange"></i> Appointments
+                    Booked
+                  </small>
+                </div>
+                <div class="col-lg-3">
                   <h2 class="font-25 col-blue">
-                    {{ doctorsListing ? doctorsListing.length : 0 }}
+                    {{ doctorsListing.docCount }}
                   </h2>
                   <small
                     ><i class="fas fa-arrow-up col-blue"></i> Doctors
                     Registered</small
                   >
                 </div>
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-3">
                   <h2 class="font-25 col-green">
-                    {{ active ? active.length : 0 }}
+                    {{ doctorsListing.active }}
                   </h2>
                   <small>
                     <i class="fas fa-arrow-up col-green"></i> Active
                     Doctors</small
                   >
                 </div>
-                <div class="col-lg-4 col-md-4">
+                <div class="col-lg-3">
                   <h2 class="font-25 col-red">
-                    {{ inactive ? inactive.length : 0 }}
+                    {{ doctorsListing.inActive }}
                   </h2>
                   <small>
                     <i class="fas fa-arrow-down col-red"></i> Inactive
@@ -41,7 +66,16 @@
                 </div>
               </div>
             </div>
-            <div class="row clearfix"></div>
+            <div class="row clearfix">
+              <div style="text-align: center" *ngIf="generateChartFlag">
+                <apx-chart
+                  [series]="chartOptions.series"
+                  [chart]="chartOptions.chart"
+                  [xaxis]="chartOptions.xaxis"
+                  [title]="chartOptions.title"
+                ></apx-chart>
+              </div>
+            </div>
           </div>
         </div>
       </div>

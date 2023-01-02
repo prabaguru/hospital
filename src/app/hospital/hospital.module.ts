@@ -23,6 +23,7 @@ import { FileUploadComponent3 } from "../shared/components/file-upload3/file-upl
 import { FilePickerModule } from "ngx-awesome-uploader";
 import { HospitalRoutingModule } from "./hospital-routing.module";
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { NgxDaterangepickerMd } from "ngx-daterangepicker-material";
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -53,6 +54,7 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     PerfectScrollbarModule,
     GooglePlaceModule,
     FilePickerModule,
+    NgxDaterangepickerMd.forRoot(),
   ],
 })
 export class HospitalModule {}

@@ -122,6 +122,22 @@ export class ApiService {
       }
     );
   }
+  //doc analysis
+
+  getAllDocByHospitals(id: any) {
+    return this.http
+      .get(`${environment.apiUrl}/doctors/getAllDocByHospitals/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+  getHospitalDocAppointments(data: any) {
+    let params = new HttpParams({ fromObject: data });
+    return this.http.get(
+      `${environment.apiUrl}/patient_appointments/getHospitalDocAppointments`,
+      {
+        params,
+      }
+    );
+  }
   private handleError(err) {
     //console.log("error caught in service");
     //console.error(err);

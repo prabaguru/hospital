@@ -134,10 +134,12 @@ export class DashboardComponent
           let app = [];
           let docData = this.getAppointments.agg.length;
           for (let i = 0; i < docData; i++) {
-            doc.push(this.getAppointments.agg[i]._id.toUpperCase());
+            doc.push(this.getAppointments.agg[i].doctorName.toUpperCase());
             app.push(this.getAppointments.agg[i].count);
           }
-          this.generateChart(doc, app);
+          this.getAppointments?.appCount > 0
+            ? this.generateChart(doc, app)
+            : (this.generateChartFlag = false);
         },
         error: (error) => {
           this.sharedDataService.showNotification(

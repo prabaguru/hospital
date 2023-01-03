@@ -3,6 +3,9 @@
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="card">
+          <mat-error class="mx-4"
+            >Select Dates for Appointment analysis</mat-error
+          >
           <input
             type="text"
             class="form-control p-3"
@@ -67,6 +70,13 @@
               </div>
             </div>
             <div class="row clearfix">
+              <div
+                class="alert alert-info px-5"
+                role="alert"
+                *ngIf="!generateChartFlag"
+              >
+                No records found...
+              </div>
               <div style="text-align: center" *ngIf="generateChartFlag">
                 <apx-chart
                   [series]="chartOptions.series"

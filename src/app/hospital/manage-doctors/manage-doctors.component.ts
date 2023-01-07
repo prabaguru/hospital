@@ -90,6 +90,7 @@ export class ManageDoctorsComponent
     } else {
       let obj = {
         hId: this.userData._id,
+        infraType: this.userData.infraType,
         hName: this.userData.firstName,
         firstName: this.loginForm.value.firstName,
         email: this.loginForm.value.email,

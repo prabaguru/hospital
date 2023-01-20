@@ -91,6 +91,10 @@ export class UpdateProfileComponent
         confirmPassword: ["", Validators.required],
         address: [this.userData.address ? this.userData.address : ""],
         AadhaarNo: [this.userData.AadhaarNo ? this.userData.AadhaarNo : ""],
+        smsHelpLineNo: [
+          this.userData.smsHelpLineNo ? this.userData.smsHelpLineNo : "",
+          [Validators.required, Validators.maxLength(10)],
+        ],
         about: [this.userData.about ? this.userData.about : ""],
       },
       {
@@ -151,7 +155,8 @@ export class UpdateProfileComponent
       this.userData.onlineStatus === this.f["onlineStatus"].value &&
       this.userData.address === this.f["address"].value &&
       this.userData.AadhaarNo === this.f["AadhaarNo"].value &&
-      this.userData.about === this.f["about"].value
+      this.userData.about === this.f["about"].value &&
+      this.userData.smsHelpLineNo === this.f["smsHelpLineNo"].value
     ) {
       return;
     } else {
@@ -162,6 +167,7 @@ export class UpdateProfileComponent
         address: this.f["address"].value,
         AadhaarNo: this.f["AadhaarNo"].value,
         about: this.f["about"].value,
+        smsHelpLineNo: this.f["smsHelpLineNo"].value,
       };
       this.subs.sink = this.apiService
         .updateHospital(obj)

@@ -47,9 +47,9 @@ export class establishmentComponent
   mintimeThu = "00:00 am";
   mintimeFri = "00:00 am";
   mintimeSat = "00:00 am";
-  mintimeCBTS = "12:00 pm";
+  mintimeCBTS = "11:00 am";
   mintimeCBT = "12:00 pm";
-  maxtimeCBT = "16:00 pm";
+  maxtimeCBT = "18:00 pm";
   BreakTimeStops = [];
   sunSlots: any;
   monSlots: any;

@@ -343,7 +343,7 @@ export class establishmentComponent
     let breakslot: any;
     if (bst && bet) {
       breakslot = this.getBreakTimeStops(bst, bet);
-      console.log("breakslot" + breakslot);
+      //console.log("breakslot" + breakslot);
     } else {
       breakslot = [];
     }
